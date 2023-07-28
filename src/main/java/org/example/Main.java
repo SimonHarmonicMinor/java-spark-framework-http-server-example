@@ -1,12 +1,21 @@
 package org.example;
 
-import spark.Request;
-import spark.Response;
-import spark.Spark;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.controller.BookController;
+import org.example.repository.InMemoryBookRepository;
+import org.example.service.BookService;
+import spark.Service;
 
 public class Main {
 
   public static void main(String[] args) {
-    Spark.get("/hello", (Request request, Response response) -> "Hello, World!");
+    BookController bookController = new BookController(
+        Service.ignite(),
+        new BookService(
+            new InMemoryBookRepository()
+        ),
+        new ObjectMapper()
+    );
+    bookController.start();
   }
 }
