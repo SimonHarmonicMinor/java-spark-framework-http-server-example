@@ -12,7 +12,7 @@ import spark.Request;
 import spark.Response;
 import spark.Service;
 
-public class BookController {
+public class BookController implements Controller {
 
   private static final Logger LOG = LoggerFactory.getLogger(BookController.class);
 
@@ -26,7 +26,8 @@ public class BookController {
     this.objectMapper = objectMapper;
   }
 
-  public void start() {
+  @Override
+  public void initializeEndpoints() {
     createBook();
   }
 
